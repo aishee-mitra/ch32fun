@@ -1,41 +1,45 @@
 ---
 name: ch32fun
-description: Work with WCH RISC-V firmware via ch32fun and minichlink.
+description: Work with WCH RISC-V firmware via ch32fun, minichlink, and bare-metal cooperative scheduling patterns.
 version: 0.1.0
-author: Hermes Agent
+author: Aishee Mitra (aishee-mitra) & Sayan Chakrabarti (sayanriju)
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
-  hermes.tags:
-    - Embedded
-    - RISC-V
-    - WCH
-    - minichlink
-  hermes.related_skills: []
+  hermes:
+    tags: [embedded, risc-v, wch, ch32v003, minichlink, ch32fun, cooperative-scheduler]
+    related_skills: []
 ---
 
 # ch32fun
 
-Knowledge base for the `cnlohr/ch32fun` repo: minimal RISC-V firmware stack, headers, examples, and `minichlink` tooling for WCH MCUs. Distilled from the README and repo structure. Does not replace the repo README or official docs.
+A comprehensive skill and reference guide for working with the `cnlohr/ch32fun` repository: a minimal, bare-metal RISC-V firmware stack, headers, examples, and `minichlink` tooling for WCH microcontrollers (including CH32V003, CH32X035, CH32V10x-V30x, CH5xx).
 
 ## When to Use
-- Questions about ch32fun repo layout, chip support, or build flow.
-- Need for exact build, flash, or debug commands with `minichlink`/`make`/PlatformIO.
-- Quick-reference on SWIO pin constraints or printf-debug throughput.
+
+- Developing bare-metal C/C++ firmware using `ch32fun` on WCH RISC-V MCUs.
+- Configuring and building projects via `make` or PlatformIO.
+- Flashing and debugging firmware with `minichlink` or GDB.
+- Designing periodic tasks or cooperative scheduling patterns without RTOS/dynamic allocation overhead.
+- Looking up chip capabilities, SWIO pin assignments, or architectural constraints (no-HAL, no malloc).
 
 ## Repo Structure
-- `ch32fun/` — single-header/source core for compiling apps.
+
+- `ch32fun/` — single-header/source core for compiling applications.
 - `minichlink/` — cross-platform programmer/debugger using libusb.
-- `examples/`, `examples_ch5xx/`, `examples_h41x/`, `examples_l103/`, `examples_usb/`, `examples_v10x/`, `examples_v20x/`, `examples_v30x/`, `examples_x00x/`, `examples_x035/` — per-family examples.
-- `build_scripts/` — make/clangd helpers.
-- `extralibs/` — optional extra libraries.
-- `misc/` — bundled `libgcc.a` and utilities.
-- `platformio.ini` — PlatformIO environments.
+- `examples/` — family and peripheral example projects.
+- `build_scripts/` — make and clangd compilation helpers.
+- `extralibs/` — optional community libraries.
+- `misc/` — bundled utilities and `libgcc.a`.
+- `platformio.ini` — PlatformIO environments and configurations.
 
 ## Reference Files
-Load on demand with `skill_view(name='ch32fun', file_path='...')`:
-- `references/chip-support.md` — chip families and known-good list.
-- `references/programming-debug.md` — minichlink, SWIO pins, printf, gdbserver.
-- `references/build-flash.md` — make, PlatformIO, build artifacts, clangd.
-- `references/constraints.md` — no-HAL philosophy, no malloc/free, design rules.
-- `references/third-party.md` — related repos and libraries.
+
+Detailed references available on demand:
+
+- `references/coop-scheduler.md` — Cooperative non-preemptive periodic task scheduler using SysTick (`PeriodicJob`), millis counter, and zero-allocation callbacks.
+- `references/build-flash.md` — Make/PlatformIO build setup, artifact sizing, and clangd / compile_commands config.
+- `references/chip-support.md` — Chip family matrix (CH32V003 primary target, V103-V307, X035, CH5xx).
+- `references/programming-debug.md` — `minichlink` usage, SWIO hardware pins (PD1), terminal fast printf (~36 KB/s), and gdbserver.
+- `references/constraints.md` — Bare-metal philosophy (no HAL, direct TRM register access, minimal ~500B footprint, alternatives to malloc/free).
+- `references/third-party.md` — Community libraries, hardware drivers, and official processor/debug manuals.
